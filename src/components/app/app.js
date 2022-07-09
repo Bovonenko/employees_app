@@ -1,45 +1,30 @@
-// import AppInfo from '../app-info/app-info';
-// import SearchPanel from '../search-panel/search-panel';
-// import AppFilter from '../app-filter/app-filter';
-// import EmployeesList from '../employees-list/employees-list';
-// import EmployeesAddForm from '../employees-add-form/employees-add-form';
-
-// import './app.css';
-
-// function App() {
-//     return(
-//         <div className="app">
-//             <AppInfo/>
-
-//             <div className="search-panel">
-//                 <SearchPanel/>
-//                 <AppFilter/>
-//             </div>
-
-//             <EmployeesList/>
-//             <EmployeesAddForm/>
-//         </div>
-//     )
-// }
-
-// export default App;
+import AppInfo from '../app-info/app-info';
+import SearchPanel from '../search-panel/search-panel';
+import AppFilter from '../app-filter/app-filter';
+import EmployeesList from '../employees-list/employees-list';
+import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 import './app.css';
 
-function WhoAmI ({name, surname, link}) {
-    return (
-        <div>
-            <h1>My name is {name()}, surname - {surname}</h1>
-            <a href={link}>My profile</a>
-        </div>
-    )
-}
-
 function App() {
+
+    const data = [
+        {name: 'John C.', salary: 800, increase: false, id: 1},
+        {name: 'Alex M.', salary: 3000, increase: true, id: 2},
+        {name: 'Carl W.', salary: 15000, increase: false, id: 3}
+    ];
+
     return(
-        <div className="App">
-            <WhoAmI name={() => {return 'John'}} surname="Smith" link="facebook.com"/>
-            <WhoAmI name={() => {return 'Alex'}} surname="Sadzc" link="vk.com"/>
+        <div className="app">
+            <AppInfo/>
+
+            <div className="search-panel">
+                <SearchPanel/>
+                <AppFilter/>
+            </div>
+
+            <EmployeesList data={data}/>
+            <EmployeesAddForm/>
         </div>
     )
 }
