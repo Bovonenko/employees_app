@@ -18,7 +18,7 @@ class App extends Component {
                 {name: 'Carl W.', salary: 15000, increase: false, rise: false, id: 3}
             ],
             term: '',
-            filter: 'moreThen1000'
+            filter: 'all'
         };
         this.maxIndex = 4;
     }
@@ -84,7 +84,7 @@ class App extends Component {
         }
     }
 
-    onUpdateFilter = (filter) => {
+    onFilterSelect = (filter) => {
         this.setState({filter});
     }
 
@@ -104,7 +104,8 @@ class App extends Component {
                     <SearchPanel 
                         onUpdateSearch={this.onUpdateSearch}/>
                     <AppFilter
-                        onUpdateFilter={this.onUpdateFilter}
+                        filter={filter}
+                        onFilterSelect={this.onFilterSelect}
                         />
                 </div>
     

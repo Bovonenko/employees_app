@@ -1,69 +1,34 @@
-import { Component } from 'react';
 import './app-filter.css';
 
-class AppFilter extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            filter: ''
-        }
-    }
+const AppFilter = (props) => {
+    const buttonsData = [
+        {name: 'all', label: 'Все сотрудники'},
+        {name: 'rise', label: 'На повышение'},
+        {name: 'moreThan1000', label: 'З/П больше 1000$'}
+    ];
 
-    onUpdateFilter = (e) => {
-        const filterType = e.target.getAttribute('data-filter');
-        console.log(filterType);
-        this.setState({
-            filter: filterType
-        })
-        this.props.onUpdateFilter(filterType);
-        
-        this.activeBtn(e);
-    }
+    const {onFilterSelect} = props;
 
-    activeBtn = (e) => {
-        const target = e.target;
-        
-        if (target && target.classList.contains('btn')) {
-            const children = target.closest('.btn-group').querySelectorAll('button');
-            console.log(children);
-            children.forEach(item => {
-                item.classList.remove('btn-light');
-                item.classList.add('btn-outline-light');
-            });
-            target.classList.add('btn-light');
-            target.classList.remove('btn-outline-light');
-        }
-    }
-    
-    
-    render() {
+    const buttons = buttonsData.map(({name, label}) => {
+        const active = props.filter === name;
+        const clazz = active ? 'btn-light' : 'btn-outline-light'
         return (
-            <div className="btn-group">
-                <button 
-                    className="btn btn-light"
-                    type='button'
-                    onClick={this.onUpdateFilter}>
-                        Все сотрудники
-                </button>
-                <button 
-                    className="btn btn-outline-light"
-                    type='button'
-                    data-filter="rise"
-                    onClick={this.onUpdateFilter}
-                    >
-                        На повышение
-                </button>
-                <button 
-                    className="btn btn-outline-light"
-                    type='button'
-                    data-filter="moreThan1000"
-                    onClick={this.onUpdateFilter}
-                    >
-                        З/П больше 1000$
-                </button>
-            </div>
+            <button 
+                className={`btn ${clazz}`}
+                type='button'
+                key={name}
+                onClick={() => onFilterSelect(name)}
+                >
+                    {label}
+            </button>
         )
-    }
+    })
+    
+    return (
+        <div className="btn-group">
+            {buttons}
+        </div>
+    )
 };
 
 export default AppFilter;
