@@ -7,7 +7,8 @@ class EmployeesAddForm extends Component {
         super(props);
         this.state = {
             name: '',
-            salary: ''
+            salary: '', 
+            error: false
         }
     }
 
@@ -19,15 +20,26 @@ class EmployeesAddForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        this.props.onAdd(this.state.name, this.state.salary);
-        this.setState({
-            name: '',
-            salary: ''
-        })
+        if (this.state.name.length > 2 && this.state.salary !== '') {
+            this.props.onAdd(this.state.name, this.state.salary);
+            this.setState({
+                name: '',
+                salary: '',
+                error: false
+            })
+        } else {
+            this.setState({
+                error: true
+            })
+        }
     }
 
     render() {
-        const {name, salary} = this.state;
+        const {name, salary, error} = this.state;
+        let className = "form-control new-post-label";
+        if (error) {
+            className += ' red';
+        }
 
         return (
             <div className="app-add-form">
@@ -36,14 +48,17 @@ class EmployeesAddForm extends Component {
                 className="add-form d-flex"
                 onSubmit={this.onSubmit}>
                 <input type="text"
-                    className="form-control new-post-label"
+                    className={className}
                     placeholder="Как его зовут?" 
+                    // required
+                    minLength={3}
                     name="name"
                     value={name} // контролируемый элемент
                     onChange={this.onValueChange}/>
                 <input type="number"
-                    className="form-control new-post-label"
+                    className={className}
                     placeholder="З/П в $?"
+                    // required
                     name="salary"
                     value={salary}
                     onChange={this.onValueChange}/>
